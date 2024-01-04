@@ -1,6 +1,7 @@
 class WordCoutTool
   def initialize(args)
     @arguments = args
+    @file = @arguments[1]
   end
 
   def main
@@ -8,7 +9,10 @@ class WordCoutTool
       p "No file or command is found!"
       return
     end
-    unless @arguments[1].include?("text") || @arguments[1].include?("txt")
+    if @arguments.length == 1
+      @file = @arguments[0]
+    end
+    unless @file.include?("text") || @file.include?("txt")
       p "Text files only!"
       return
     end
@@ -31,19 +35,19 @@ class WordCoutTool
   private
 
   def number_of_bytes
-    file = @arguments[1]
+    file = @file
     size = File.size(file)
     print size, " ", @arguments[1]
   end
 
   def number_of_lines
-    file = @arguments[1]
+    file = @file
     lines = IO.readlines(file)
     print lines.length, " ", @arguments[1]
   end
 
   def number_of_words
-    file = @arguments[1]
+    file = @file
     lines = IO.readlines(file)
     num_lines = lines.length
     text = lines.join
@@ -52,12 +56,19 @@ class WordCoutTool
   end
 
   def number_of_chars
-    file = @arguments[1]
+    file = @file
     lines = IO.readlines(file)
     num_lines = lines.length
     text = lines.join
     chars_count = text.length
     print chars_count, " ", @arguments[1]
+  end
+
+  def count_everything
+    number_of_lines
+    number_of_words
+    number_of_bytes
+    print " ", @file
   end
 end
 
