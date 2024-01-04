@@ -4,7 +4,7 @@ class WordCoutTool
   end
 
   def main
-    if @arguments.length != 2
+    if @arguments.length == 0
       p "No file or command is found!"
       return
     end
@@ -20,8 +20,11 @@ class WordCoutTool
       number_of_lines
     when "-w"
       number_of_words
+    when "-m"
+      number_of_chars
     else
-      p "nothing"
+      # count words, chars, lines, and bytes when no option is found
+      count_everything
     end
   end
 
@@ -46,6 +49,15 @@ class WordCoutTool
     text = lines.join
     words_count = text.split.length
     print words_count, " ", @arguments[1]
+  end
+
+  def number_of_chars
+    file = @arguments[1]
+    lines = IO.readlines(file)
+    num_lines = lines.length
+    text = lines.join
+    chars_count = text.length
+    print chars_count, " ", @arguments[1]
   end
 end
 
